@@ -1,13 +1,25 @@
+import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { BorshInstructionCoder } from "@coral-xyz/anchor";
 import type { Idl } from "@coral-xyz/anchor";
-import { Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
+import {
+  Connection,
+  Keypair,
+  PublicKey,
+  TransactionInstruction,
+  TransactionMessage,
+} from "@solana/web3.js";
 import BN from "bn.js";
 import { describe, expect, it } from "vitest";
+import { fetchAddressLookupTablesForMessage } from "./fetchProgramInstructionsFromTx.js";
 import {
   parseAnchorInstruction,
   parsedInstructionToJsonSafe,
-} from "./parseAnchorInstruction";
+} from "./parseAnchorInstruction.js";
+import {
+  parseAnchorInstructionsFromTransaction,
+  parseAnchorTransaction,
+} from "./parseAnchorTransaction.js";
 
 /**
  * Anchor-style discriminator: first 8 bytes of sha256("global:<name>").
@@ -145,4 +157,71 @@ describe("parseAnchorInstruction", () => {
 
     expect(parseAnchorInstruction(idl, ix)).toBeNull();
   });
+});
+
+describe("parseAnchorTransaction", () => {
+  it("decodes matching program instructions from a compiled message (no RPC)", () => {
+    const program = Keypair.generate();
+    const idl = buildTestIdl(program.publicKey);
+    const coder = new BorshInstructionCoder(idl);
+    const authority = Keypair.generate();
+    const vault = Keypair.generate();
+    const payer = Keypair.generate();
+    const ix = new TransactionInstruction({
+      programId: program.publicKey,
+      keys: [
+        { pubkey: authority.publicKey, isSigner: true, isWritable: true },
+        { pubkey: vault.publicKey, isSigner: false, isWritable: true },
+      ],
+      data: coder.encode("initialize", { amount: new BN(42) }),
+    });
+    const message = new TransactionMessage({
+      payerKey: payer.publicKey,
+      recentBlockhash: "11111111111111111111111111111111",
+      instructions: [ix],
+    }).compileToLegacyMessage();
+
+    const parsedTx = parseAnchorTransaction(idl, { message });
+    expect(parsedTx.programId).toBe(idl.address);
+    expect(parsedTx.instructions).toHaveLength(1);
+    expect(parsedTx.instructions[0].topLevelInstructionIndex).toBe(0);
+    expect(parsedTx.instructions[0].parsed?.name).toBe("initialize");
+    expect((parsedTx.instructions[0].parsed?.args.amount as BN).toString()).toBe(
+      "42"
+    );
+
+    expect(parseAnchorInstructionsFromTransaction(idl, { message })).toEqual(
+      parsedTx.instructions
+    );
+  });
+});
+
+describe("optional RPC integration", () => {
+  it.skipIf(!process.env.DEVNET_TX_SIGNATURE || !process.env.TEST_IDL_PATH)(
+    "GET transaction from RPC then parse (set DEVNET_TX_SIGNATURE + TEST_IDL_PATH)",
+    async () => {
+      const idl = JSON.parse(
+        readFileSync(process.env.TEST_IDL_PATH!, "utf8")
+      ) as Idl;
+      const connection = new Connection(
+        process.env.SOLANA_RPC_URL ?? "https://api.devnet.solana.com",
+        "confirmed"
+      );
+      const res = await connection.getTransaction(
+        process.env.DEVNET_TX_SIGNATURE!,
+        { maxSupportedTransactionVersion: 0 }
+      );
+      expect(res?.transaction).toBeDefined();
+
+      const alts = await fetchAddressLookupTablesForMessage(
+        connection,
+        res!.transaction.message
+      );
+      const parsedTx = parseAnchorTransaction(idl, res!.transaction, {
+        addressLookupTableAccounts: alts,
+      });
+      expect(parsedTx.instructions.length).toBeGreaterThan(0);
+      expect(parsedTx.instructions[0].parsed).not.toBeNull();
+    }
+  );
 });

@@ -38,11 +38,12 @@ import {
   PublicKey,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { fetchProgramInstructionsFromTx } from "../src/fetchProgramInstructionsFromTx";
+import { fetchAddressLookupTablesForMessage } from "../src/fetchProgramInstructionsFromTx";
 import {
   parseAnchorInstruction,
   parsedInstructionToJsonSafe,
 } from "../src/parseAnchorInstruction";
+import { parseAnchorTransaction } from "../src/parseAnchorTransaction";
 
 type Payload = {
   data: string;
@@ -125,10 +126,13 @@ Anchor IDL instruction decoder — pass YOUR idl.json; nothing is hardcoded.
 │  "data" = instruction data only (hex or base58 per dataEncoding).
 │  "accounts" = same order as in the transaction instruction.
 │
-└─ In TypeScript (your app)
-   import idl from "./your.idl.json";
-   import { parseAnchorInstruction } from "./src/parseAnchorInstruction";
-   parseAnchorInstruction(idl as Idl, transactionInstruction);
+└─ In TypeScript (IDL + transaction are already in memory)
+   import type { Idl } from "@coral-xyz/anchor";
+   import { parseAnchorTransaction } from "./src/parseAnchorTransaction";
+   const parsed = parseAnchorTransaction(idl, transactionBody, {
+     addressLookupTableAccounts: optionalResolvedAlts,
+   });
+   // parsed.programId, parsed.instructions[*].parsed
 
 Run unit tests: npm test
 `);
@@ -237,14 +241,12 @@ async function main(): Promise<void> {
     }
 
     const connection = new Connection(rpcUrl, "confirmed");
-    const programPk = new PublicKey(idl.address);
-    let ixs: TransactionInstruction[];
+    let res: Awaited<ReturnType<Connection["getTransaction"]>>;
     try {
-      ixs = await fetchProgramInstructionsFromTx(
-        connection,
-        signature,
-        programPk
-      );
+      res = await connection.getTransaction(signature, {
+        commitment: "confirmed",
+        maxSupportedTransactionVersion: 0,
+      });
     } catch (e) {
       console.error(
         e instanceof Error ? e.message : "Failed to fetch transaction."
@@ -252,21 +254,44 @@ async function main(): Promise<void> {
       process.exit(1);
     }
 
-    if (ixs.length === 0) {
+    if (!res?.transaction) {
+      console.error(`Transaction not found or missing data: ${signature}`);
+      process.exit(1);
+    }
+
+    let rows: ReturnType<typeof parseAnchorTransaction>["instructions"];
+    try {
+      const alts = await fetchAddressLookupTablesForMessage(
+        connection,
+        res.transaction.message
+      );
+      rows = parseAnchorTransaction(idl, res.transaction, {
+        addressLookupTableAccounts: alts,
+        parseInstruction: { strictProgramId: true },
+      }).instructions;
+    } catch (e) {
+      console.error(
+        e instanceof Error ? e.message : "Failed to parse transaction message."
+      );
+      process.exit(1);
+    }
+
+    if (rows.length === 0) {
       console.error(
         "No top-level instruction in this transaction targets idl.address. Check signature, cluster (RPC), and IDL program id."
       );
       process.exit(1);
     }
 
-    if (ixIndex >= ixs.length) {
+    if (ixIndex >= rows.length) {
       console.error(
-        `--ix-index ${ixIndex} is out of range; this transaction has ${ixs.length} instruction(s) for this program (use 0..${ixs.length - 1}).`
+        `--ix-index ${ixIndex} is out of range; this transaction has ${rows.length} instruction(s) for this program (use 0..${rows.length - 1}).`
       );
       process.exit(1);
     }
 
-    const ix = ixs[ixIndex];
+    const row = rows[ixIndex]!;
+    const ix = row.instruction;
     const strictProgramId = true;
 
     const input = {
@@ -277,12 +302,12 @@ async function main(): Promise<void> {
         signature,
         rpcUrl,
         ixIndex,
-        instructionsForProgram: ixs.length,
+        instructionsForProgram: rows.length,
       },
       instruction: instructionToReport(ix, idl, strictProgramId, "from_chain"),
     };
 
-    const parsed = parseAnchorInstruction(idl, ix, { strictProgramId });
+    const parsed = row.parsed;
     emitReport(input, parsed, outPath);
     return;
   }

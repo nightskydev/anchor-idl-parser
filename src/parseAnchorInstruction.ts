@@ -1,3 +1,9 @@
+/**
+ * Single-instruction decode: in-memory {@link Idl} + {@link TransactionInstruction}.
+ * For a full transaction body (`{ message }` or `VersionedTransaction`), use
+ * {@link parseAnchorTransaction} instead. No I/O in this module.
+ */
+
 import { BorshInstructionCoder } from "@coral-xyz/anchor";
 import type { Idl } from "@coral-xyz/anchor";
 import BN from "bn.js";
@@ -95,6 +101,7 @@ export function parseAnchorInstruction(
 
   const coder = new BorshInstructionCoder(idl);
   const decoded = coder.decode(instruction.data);
+  console.log({decoded, coder});
   if (!decoded) {
     return null;
   }

@@ -5,11 +5,12 @@ import {
   TransactionInstruction,
   type VersionedMessage,
 } from "@solana/web3.js";
+import { programInstructionsForProgramFromMessage } from "./programInstructionsFromMessage.js";
 
 /**
- * Load address lookup tables required for v0 messages.
+ * Resolve address lookup tables for a v0 message via RPC (not used for legacy).
  */
-async function resolveAddressLookupTables(
+export async function fetchAddressLookupTablesForMessage(
   connection: Connection,
   message: VersionedMessage
 ): Promise<AddressLookupTableAccount[]> {
@@ -30,8 +31,10 @@ async function resolveAddressLookupTables(
 }
 
 /**
- * Fetch a confirmed transaction and return every top-level instruction that
- * invokes `programId` (in order).
+ * Fetch a confirmed transaction over RPC and return every top-level instruction
+ * that invokes `programId` (in message order). For I/O-free parsing, use
+ * {@link programInstructionsForProgramFromMessage} or
+ * {@link parseAnchorTransaction} with data you already have.
  */
 export async function fetchProgramInstructionsFromTx(
   connection: Connection,
@@ -48,47 +51,12 @@ export async function fetchProgramInstructionsFromTx(
   }
 
   const { message } = tx.transaction;
-  const addressLookupTableAccounts = await resolveAddressLookupTables(
-    connection,
-    message
-  );
+  const addressLookupTableAccounts =
+    await fetchAddressLookupTablesForMessage(connection, message);
 
-  const accountKeys = message.getAccountKeys({
-    addressLookupTableAccounts:
-      addressLookupTableAccounts.length > 0
-        ? addressLookupTableAccounts
-        : undefined,
-  });
-
-  const want = programId.toBase58();
-  const out: TransactionInstruction[] = [];
-
-  for (const ci of message.compiledInstructions) {
-    const pid = accountKeys.get(ci.programIdIndex);
-    if (!pid || pid.toBase58() !== want) {
-      continue;
-    }
-
-    const keys = ci.accountKeyIndexes.map((idx) => {
-      const pubkey = accountKeys.get(idx);
-      if (!pubkey) {
-        throw new Error(`Missing account at index ${idx} in transaction ${signature}`);
-      }
-      return {
-        pubkey,
-        isSigner: message.isAccountSigner(idx),
-        isWritable: message.isAccountWritable(idx),
-      };
-    });
-
-    out.push(
-      new TransactionInstruction({
-        programId: pid,
-        keys,
-        data: Buffer.from(ci.data),
-      })
-    );
-  }
-
-  return out;
+  return programInstructionsForProgramFromMessage(
+    programId,
+    message,
+    addressLookupTableAccounts
+  ).map((x) => x.instruction);
 }
