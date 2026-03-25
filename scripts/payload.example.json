@@ -1,0 +1,17 @@
+{
+  "dataEncoding": "hex",
+  "data": "REPLACE_WITH_INSTRUCTION_DATA_HEX_FROM_EXPLORER_OR_SDK",
+  "programId": "OPTIONAL_OMIT_IF_SAME_AS_IDL_ADDRESS",
+  "accounts": [
+    {
+      "pubkey": "FirstAccountPubkeyBase58",
+      "isSigner": true,
+      "isWritable": true
+    },
+    {
+      "pubkey": "SecondAccountPubkeyBase58",
+      "isSigner": false,
+      "isWritable": true
+    }
+  ]
+}

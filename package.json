@@ -1,0 +1,26 @@
+{
+  "name": "mockup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "parse-instruction": "tsx scripts/parse-anchor-instruction.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.32.1",
+    "@solana/web3.js": "^1.98.4"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.2.0",
+    "@types/bs58": "^4.0.4",
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.1"
+  }
+}

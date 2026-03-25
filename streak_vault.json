@@ -1,0 +1,3601 @@
+{
+  "address": "Bt1YG5sV3oG69rcZvpjFwnyLTAyAKMBNPKrmNBco2JWs",
+  "metadata": {
+    "name": "streak_vault",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Streak Phase 3 - Yield Farming Vault & House Bot"
+  },
+  "instructions": [
+    {
+      "name": "claim_rebate",
+      "discriminator": [
+        180,
+        77,
+        169,
+        215,
+        170,
+        162,
+        242,
+        1
+      ],
+      "accounts": [
+        {
+          "name": "bot_key",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "bot_token_account",
+          "writable": true
+        },
+        {
+          "name": "bot_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bot_key"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bot_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bot_key"
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_fees_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  102,
+                  101,
+                  101,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "claim_usdc_by_user",
+      "discriminator": [
+        100,
+        72,
+        215,
+        106,
+        217,
+        137,
+        26,
+        96
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "winner_token_mint",
+          "docs": [
+            "Mint of the winner token (yes or no) - must match event.winner_token_mint"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_winner_token_account",
+          "writable": true
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_usdc_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "claim_yield",
+      "discriminator": [
+        49,
+        74,
+        111,
+        7,
+        186,
+        22,
+        61,
+        165
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_token_account",
+          "writable": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_empty_position",
+      "docs": [
+        "Close UserPosition when principal=0 and pending_yield=0. Reclaims rent to user.",
+        "Call claim_yield first if you have pending yield."
+      ],
+      "discriminator": [
+        175,
+        105,
+        138,
+        38,
+        237,
+        235,
+        250,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_event_token_vault",
+      "discriminator": [
+        21,
+        99,
+        27,
+        234,
+        69,
+        20,
+        234,
+        104
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "event_token_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "credit_daily_yield",
+      "discriminator": [
+        186,
+        15,
+        237,
+        245,
+        63,
+        104,
+        224,
+        184
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "insurance_fund_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  110,
+                  115,
+                  117,
+                  114,
+                  97,
+                  110,
+                  99,
+                  101,
+                  95,
+                  102,
+                  117,
+                  110,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "daily_pending_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  97,
+                  105,
+                  108,
+                  121,
+                  95,
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "company_treasury_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deposit",
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_token_account",
+          "writable": true
+        },
+        {
+          "name": "global_vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_fees_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  102,
+                  101,
+                  101,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "fail_event",
+      "discriminator": [
+        5,
+        53,
+        119,
+        28,
+        18,
+        132,
+        214,
+        23
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_fees_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  102,
+                  101,
+                  101,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "insurance_fund_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  110,
+                  115,
+                  117,
+                  114,
+                  97,
+                  110,
+                  99,
+                  101,
+                  95,
+                  102,
+                  117,
+                  110,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "daily_pending_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  97,
+                  105,
+                  108,
+                  121,
+                  95,
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "finish_event",
+      "discriminator": [
+        212,
+        237,
+        21,
+        119,
+        133,
+        119,
+        103,
+        57
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_fees_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  102,
+                  101,
+                  101,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        },
+        {
+          "name": "winner_token_mint",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "force_set_emergency",
+      "discriminator": [
+        156,
+        86,
+        57,
+        203,
+        224,
+        64,
+        98,
+        3
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "emergency",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "usdc_mint"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "bot_authority",
+          "type": "pubkey"
+        },
+        {
+          "name": "company_treasury",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "initialize_daily_pending_yield",
+      "discriminator": [
+        254,
+        10,
+        62,
+        65,
+        160,
+        28,
+        144,
+        247
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "usdc_mint"
+        },
+        {
+          "name": "daily_pending_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  97,
+                  105,
+                  108,
+                  121,
+                  95,
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_insurance_fund",
+      "discriminator": [
+        2,
+        239,
+        39,
+        87,
+        50,
+        28,
+        108,
+        12
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "usdc_mint"
+        },
+        {
+          "name": "insurance_fund_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  110,
+                  115,
+                  117,
+                  114,
+                  97,
+                  110,
+                  99,
+                  101,
+                  95,
+                  102,
+                  117,
+                  110,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_master_vault_usdc",
+      "discriminator": [
+        68,
+        177,
+        17,
+        34,
+        113,
+        101,
+        247,
+        169
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "usdc_mint"
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_pending_fees",
+      "discriminator": [
+        143,
+        4,
+        114,
+        7,
+        20,
+        95,
+        118,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "usdc_mint"
+        },
+        {
+          "name": "pending_fees_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  102,
+                  101,
+                  101,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_user_yield",
+      "discriminator": [
+        245,
+        92,
+        64,
+        98,
+        205,
+        51,
+        77,
+        135
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "usdc_mint"
+        },
+        {
+          "name": "user_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "purchase_token_by_bot",
+      "discriminator": [
+        93,
+        78,
+        117,
+        107,
+        189,
+        116,
+        201,
+        93
+      ],
+      "accounts": [
+        {
+          "name": "bot_key",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "bot_token_account",
+          "writable": true
+        },
+        {
+          "name": "bot_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bot_key"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bot_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bot_key"
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "register_bot",
+      "discriminator": [
+        223,
+        16,
+        85,
+        65,
+        66,
+        232,
+        251,
+        174
+      ],
+      "accounts": [
+        {
+          "name": "bot_authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "bots_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "bot_key"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "bot_key",
+          "type": "pubkey"
+        },
+        {
+          "name": "is_house_bot",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "register_event",
+      "discriminator": [
+        206,
+        4,
+        37,
+        59,
+        79,
+        120,
+        169,
+        181
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        },
+        {
+          "name": "yes_token_mint",
+          "type": "pubkey"
+        },
+        {
+          "name": "no_token_mint",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "remove_bot",
+      "discriminator": [
+        49,
+        239,
+        98,
+        212,
+        120,
+        98,
+        225,
+        252
+      ],
+      "accounts": [
+        {
+          "name": "bot_authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "bots_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "bot_key"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "bot_key",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "request_capital_from_insurance_fund",
+      "discriminator": [
+        48,
+        233,
+        28,
+        73,
+        183,
+        34,
+        224,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "insurance_fund_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  110,
+                  115,
+                  117,
+                  114,
+                  97,
+                  110,
+                  99,
+                  101,
+                  95,
+                  102,
+                  117,
+                  110,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "request_capital_from_master_vault",
+      "discriminator": [
+        67,
+        226,
+        199,
+        28,
+        89,
+        227,
+        26,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "send_fee",
+      "discriminator": [
+        11,
+        247,
+        67,
+        237,
+        8,
+        150,
+        76,
+        251
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin_token_account",
+          "writable": true
+        },
+        {
+          "name": "bot_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "bot_key"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bot_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  116,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "bot_key"
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "insurance_fund_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  110,
+                  115,
+                  117,
+                  114,
+                  97,
+                  110,
+                  99,
+                  101,
+                  95,
+                  102,
+                  117,
+                  110,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "daily_pending_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  97,
+                  105,
+                  108,
+                  121,
+                  95,
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_fees_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  95,
+                  102,
+                  101,
+                  101,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "bot_key",
+          "type": "pubkey"
+        },
+        {
+          "name": "event_nonce",
+          "type": "string"
+        },
+        {
+          "name": "transaction_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "send_token_to_event_vault",
+      "discriminator": [
+        87,
+        68,
+        152,
+        18,
+        19,
+        143,
+        149,
+        95
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "user_token_account",
+          "writable": true
+        },
+        {
+          "name": "event_token_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_token_account",
+          "writable": true
+        },
+        {
+          "name": "global_vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw_all",
+      "discriminator": [
+        96,
+        246,
+        166,
+        130,
+        229,
+        50,
+        43,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_token_account",
+          "writable": true
+        },
+        {
+          "name": "global_vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "master_vault_usdc_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  115,
+                  116,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  100,
+                  99
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_yield_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_position",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "withdraw_token_from_event_vault",
+      "discriminator": [
+        232,
+        57,
+        230,
+        138,
+        236,
+        206,
+        243,
+        251
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "event",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "event_token_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "event_nonce"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "event_nonce",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "BotPosition",
+      "discriminator": [
+        149,
+        149,
+        235,
+        219,
+        85,
+        186,
+        42,
+        255
+      ]
+    },
+    {
+      "name": "BotState",
+      "discriminator": [
+        174,
+        192,
+        229,
+        25,
+        87,
+        205,
+        229,
+        158
+      ]
+    },
+    {
+      "name": "Event",
+      "discriminator": [
+        125,
+        192,
+        125,
+        158,
+        9,
+        115,
+        152,
+        233
+      ]
+    },
+    {
+      "name": "GlobalVaultState",
+      "discriminator": [
+        147,
+        29,
+        228,
+        30,
+        37,
+        166,
+        68,
+        42
+      ]
+    },
+    {
+      "name": "UserPosition",
+      "discriminator": [
+        251,
+        248,
+        209,
+        245,
+        83,
+        234,
+        17,
+        27
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "DepositTooSmall",
+      "msg": "Deposit amount below minimum (10 USDC)"
+    },
+    {
+      "code": 6001,
+      "name": "Unauthorized",
+      "msg": "Only bot_authority can call this instruction"
+    },
+    {
+      "code": 6002,
+      "name": "AdminOnly",
+      "msg": "Only admin can call this instruction"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidBotPositionPda",
+      "msg": "Bot position account must be the PDA for this bot and event_nonce"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidAmount",
+      "msg": "Amount must be greater than zero"
+    },
+    {
+      "code": 6005,
+      "name": "YieldCreditTooSoon",
+      "msg": "credit_daily_yield can only be called once per UTC day"
+    },
+    {
+      "code": 6006,
+      "name": "WithdrawLocked",
+      "msg": "Withdraw not allowed before unlock timestamp"
+    },
+    {
+      "code": 6007,
+      "name": "InsufficientPrincipal",
+      "msg": "Insufficient principal for withdraw"
+    },
+    {
+      "code": 6008,
+      "name": "EventNotFinished",
+      "msg": "Event must be finished before claiming rebate"
+    },
+    {
+      "code": 6009,
+      "name": "EventAlreadyFinished",
+      "msg": "Cannot purchase tokens after event is finished"
+    },
+    {
+      "code": 6010,
+      "name": "EventNotStarted",
+      "msg": "Event must be in Started state to create vault"
+    },
+    {
+      "code": 6011,
+      "name": "NotUserBot",
+      "msg": "Only user bots can claim rebate"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidEventNonceLength",
+      "msg": "event_nonce must be 1-32 characters (UUID without dashes)"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidTokenMint",
+      "msg": "Token mint must be event's yes_token_mint, no_token_mint, or usdc_mint"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidWinnerToken",
+      "msg": "Winner token must be event's yes_token_mint or no_token_mint"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidRedeemToken",
+      "msg": "Token being redeemed must match event winner"
+    },
+    {
+      "code": 6016,
+      "name": "PositionNotEmpty",
+      "msg": "Position must be empty (principal=0, pending_yield=0) to close; use claim_yield first if needed"
+    }
+  ],
+  "types": [
+    {
+      "name": "BotPosition",
+      "docs": [
+        "Bot position per event. PDA seeds: [SEED, bot_key.key(), event_nonce.as_bytes()]"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "event_nonce",
+            "type": "string"
+          },
+          {
+            "name": "accumulated_pending_rebate",
+            "type": "u64"
+          },
+          {
+            "name": "token_balance",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BotState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bot_key",
+            "type": "pubkey"
+          },
+          {
+            "name": "is_house_bot",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Event",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "event_nonce",
+            "type": "string"
+          },
+          {
+            "name": "event_status",
+            "type": {
+              "defined": {
+                "name": "EventStatus"
+              }
+            }
+          },
+          {
+            "name": "yes_token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "no_token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "winner_token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_fee",
+            "type": "u64"
+          },
+          {
+            "name": "total_house_bot_rebate",
+            "type": "u64"
+          },
+          {
+            "name": "total_user_bot_rebate",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EventStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Started"
+          },
+          {
+            "name": "Finished"
+          },
+          {
+            "name": "Failed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalVaultState",
+      "docs": [
+        "Global Vault State - Master PDA holding all vault configuration and accounting"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "bot_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "usdc_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "company_treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_user_principal",
+            "type": "u64"
+          },
+          {
+            "name": "global_yield_index",
+            "type": "u128"
+          },
+          {
+            "name": "last_yield_credit_utc_day",
+            "type": "u32"
+          },
+          {
+            "name": "emergency_pause",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserPosition",
+      "docs": [
+        "User Position - Tracks individual user's deposit and yield"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "principal",
+            "type": "u64"
+          },
+          {
+            "name": "pending_yield",
+            "type": "u64"
+          },
+          {
+            "name": "yield_index",
+            "type": "u128"
+          },
+          {
+            "name": "unlock_timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "last_deposit_timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
