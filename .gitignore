@@ -37,6 +37,3 @@ Thumbs.db
 *.swo
 .idea/
 .vscode/
-
-# CLI-generated reports (e.g. --out ./parsed-report.json)
-parsed-report.json
