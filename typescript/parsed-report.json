@@ -1,6 +1,6 @@
 {
   "input": {
-    "idlPath": "/home/dragon/development/mockup/streak_vault.json",
+    "idlPath": "/home/dragon/development/mockup/typescript/streak_vault.json",
     "idl": {
       "address": "Bt1YG5sV3oG69rcZvpjFwnyLTAyAKMBNPKrmNBco2JWs",
       "name": "streak_vault",
@@ -36,10 +36,10 @@
       ]
     },
     "source": "payload",
-    "payloadSource": "/home/dragon/development/mockup/scripts/payload.example.json",
+    "payloadSource": "/home/dragon/development/mockup/typescript/scripts/payload.example.json",
     "payload": {
       "dataEncoding": "hex",
-      "data": "57449812138f955f20000000353862386563373766623762346663683639363735306430373838396531348096980000000000",
+      "data": "57449812138f955f1e0000003538626563373766623762346663683639363735306430373838396531348096980000000000",
       "programId": "Bt1YG5sV3oG69rcZvpjFwnyLTAyAKMBNPKrmNBco2JWs",
       "accounts": [
         {
@@ -84,8 +84,8 @@
       "programIdMatchesIdl": true,
       "strictProgramId": true,
       "dataEncoding": "hex",
-      "dataLengthBytes": 51,
-      "dataHex": "57449812138f955f20000000353862386563373766623762346663683639363735306430373838396531348096980000000000",
+      "dataLengthBytes": 50,
+      "dataHex": "57449812138f955f1e0000003538626563373766623762346663683639363735306430373838396531348096980000000000",
       "accountCount": 7,
       "accounts": [
         {
@@ -129,8 +129,8 @@
   "output": {
     "name": "send_token_to_event_vault",
     "args": {
-      "event_nonce": "58b8ec77fb7b4fch696750d07889e14�",
-      "amount": "39062"
+      "event_nonce": "58bec77fb7b4fch696750d07889e14",
+      "amount": "10000000"
     },
     "argSchema": [
       {
@@ -192,12 +192,12 @@
         {
           "name": "event_nonce",
           "type": "string",
-          "data": "58b8ec77fb7b4fch696750d07889e14�"
+          "data": "58bec77fb7b4fch696750d07889e14"
         },
         {
           "name": "amount",
           "type": "u64",
-          "data": "39062"
+          "data": "10000000"
         }
       ],
       "accounts": [

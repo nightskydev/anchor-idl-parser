@@ -1,0 +1,24 @@
+[package]
+name = "parse-anchor-instruction"
+version = "0.1.0"
+edition = "2021"
+description = "Parse Anchor program instructions from JSON IDL + raw instruction (Rust mirror of the TypeScript helper)."
+
+[dependencies]
+anchor-lang-idl-spec = "0.1"
+bs58 = "0.5"
+hex = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "1"
+
+[dev-dependencies]
+solana-keypair = "2"
+solana-signer = "2"
+solana-transaction = "2"
+solana-pubkey = "2"
+solana-instruction = "2"
+solana-message = "2"
+borsh = { version = "1", features = ["derive"] }
+rand = "0.8"

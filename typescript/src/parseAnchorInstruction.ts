@@ -101,7 +101,6 @@ export function parseAnchorInstruction(
 
   const coder = new BorshInstructionCoder(idl);
   const decoded = coder.decode(instruction.data);
-  console.log({decoded, coder});
   if (!decoded) {
     return null;
   }
