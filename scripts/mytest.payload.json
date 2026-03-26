@@ -1,0 +1,19 @@
+{
+  "_comment": "Example for IDL mytest.json (streak vault / escrow program). Instruction: set_fee(admin_fee=100, resolver_fee=200). Replace pubkeys with real accounts; order must match the IDL.",
+  "dataEncoding": "hex",
+  "data": "129a1812edd613506400000000000000c800000000000000",
+  "programId": "Dmbeqr9AzoFD5PLHECmVRXn5zz8ikyx9inMe3u3KQbkH",
+  "strictProgramId": true,
+  "accounts": [
+    {
+      "pubkey": "9Pz3Lx8BovRsw3xzs9TiDxqatHZcnBfvx5EPFz2tSyP",
+      "isSigner": true,
+      "isWritable": true
+    },
+    {
+      "pubkey": "Hog7rUASGua1nUWzsMnNG9P9ScAh35fyfU2bzPZ6SVyW",
+      "isSigner": false,
+      "isWritable": true
+    }
+  ]
+}

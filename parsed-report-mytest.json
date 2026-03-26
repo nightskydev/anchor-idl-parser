@@ -1,0 +1,123 @@
+{
+  "input": {
+    "idlPath": "/home/dragon/development/mockup/mytest.json",
+    "idl": {
+      "address": "Dmbeqr9AzoFD5PLHECmVRXn5zz8ikyx9inMe3u3KQbkH",
+      "name": "mytest",
+      "version": "0.1.0",
+      "instructionNames": [
+        "approve",
+        "change_admin",
+        "dispute",
+        "init_admin",
+        "initialize",
+        "refund",
+        "resolve",
+        "set_fee",
+        "withdraw_for_resolve"
+      ]
+    },
+    "source": "payload",
+    "payloadSource": "/home/dragon/development/mockup/scripts/mytest.payload.json",
+    "payload": {
+      "_comment": "Example for IDL mytest.json (streak vault / escrow program). Instruction: set_fee(admin_fee=100, resolver_fee=200). Replace pubkeys with real accounts; order must match the IDL.",
+      "dataEncoding": "hex",
+      "data": "129a1812edd613506400000000000000c800000000000000",
+      "programId": "Dmbeqr9AzoFD5PLHECmVRXn5zz8ikyx9inMe3u3KQbkH",
+      "strictProgramId": true,
+      "accounts": [
+        {
+          "pubkey": "9Pz3Lx8BovRsw3xzs9TiDxqatHZcnBfvx5EPFz2tSyP",
+          "isSigner": true,
+          "isWritable": true
+        },
+        {
+          "pubkey": "Hog7rUASGua1nUWzsMnNG9P9ScAh35fyfU2bzPZ6SVyW",
+          "isSigner": false,
+          "isWritable": true
+        }
+      ]
+    },
+    "instruction": {
+      "programId": "Dmbeqr9AzoFD5PLHECmVRXn5zz8ikyx9inMe3u3KQbkH",
+      "programIdMatchesIdl": true,
+      "strictProgramId": true,
+      "dataEncoding": "hex",
+      "dataLengthBytes": 24,
+      "dataHex": "129a1812edd613506400000000000000c800000000000000",
+      "accountCount": 2,
+      "accounts": [
+        {
+          "pubkey": "9Pz3Lx8BovRsw3xzs9TiDxqatHZcnBfvx5EPFz2tSyP",
+          "isSigner": true,
+          "isWritable": true
+        },
+        {
+          "pubkey": "Hog7rUASGua1nUWzsMnNG9P9ScAh35fyfU2bzPZ6SVyW",
+          "isSigner": false,
+          "isWritable": true
+        }
+      ]
+    }
+  },
+  "output": {
+    "name": "set_fee",
+    "args": {
+      "admin_fee": "100",
+      "resolver_fee": "200"
+    },
+    "argSchema": [
+      {
+        "name": "admin_fee",
+        "type": "u64"
+      },
+      {
+        "name": "resolver_fee",
+        "type": "u64"
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Admin1",
+        "pubkey": "9Pz3Lx8BovRsw3xzs9TiDxqatHZcnBfvx5EPFz2tSyP",
+        "isSigner": true,
+        "isWritable": true
+      },
+      {
+        "name": "Admin_state",
+        "pubkey": "Hog7rUASGua1nUWzsMnNG9P9ScAh35fyfU2bzPZ6SVyW",
+        "isSigner": false,
+        "isWritable": true
+      }
+    ],
+    "programIdMatches": true,
+    "formattedDisplay": {
+      "args": [
+        {
+          "name": "admin_fee",
+          "type": "u64",
+          "data": "100"
+        },
+        {
+          "name": "resolver_fee",
+          "type": "u64",
+          "data": "200"
+        }
+      ],
+      "accounts": [
+        {
+          "name": "Admin1",
+          "pubkey": "9Pz3Lx8BovRsw3xzs9TiDxqatHZcnBfvx5EPFz2tSyP",
+          "isSigner": true,
+          "isWritable": true
+        },
+        {
+          "name": "Admin_state",
+          "pubkey": "Hog7rUASGua1nUWzsMnNG9P9ScAh35fyfU2bzPZ6SVyW",
+          "isSigner": false,
+          "isWritable": true
+        }
+      ]
+    }
+  }
+}
